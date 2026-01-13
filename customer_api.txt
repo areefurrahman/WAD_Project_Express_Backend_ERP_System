@@ -1,0 +1,7 @@
+| Method | Endpoint                    | Access        | Purpose          |
+| ------ | --------------------------- | ------------- | ---------------- |
+| POST   | `/api/customers`            | Admin / Staff | Create customer  |
+| GET    | `/api/customers`            | Admin / Staff | List customers   |
+| GET    | `/api/customers/:id`        | Admin / Staff | Customer details |
+| PUT    | `/api/customers/:id`        | Admin         | Update customer  |
+| GET    | `/api/customers/:id/ledger` | Admin         | Customer ledger  |

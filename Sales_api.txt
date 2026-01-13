@@ -1,0 +1,9 @@
+Sales APIs: 
+
+| Method | Endpoint                          | Purpose                |
+| ------ | --------------------------------- | ---------------------- |
+| POST   | `/api/sales`                      | Create a sale          |
+| GET    | `/api/sales`                      | List all sales         |
+| GET    | `/api/sales/:id`                  | Get single sale        |
+| GET    | `/api/sales/customer/:customerId` | Sales by customer      |
+| DELETE | `/api/sales/:id`                  | Cancel sale (optional) |

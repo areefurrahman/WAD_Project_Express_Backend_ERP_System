@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="project-name">ERP API Catalog</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/api-catalog.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <h1>ERP API Catalog</h1>
+                    <span class="version">v1.0.0</span>
+                </div>
+                <div class="header-actions">
+                    <div class="token-status" id="token-status">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>No Token</span>
+                    </div>
+                    <button class="btn btn-icon" id="manage-token-btn" title="Manage Token">
+                        <i class="fas fa-key"></i>
+                    </button>
+                    <button class="btn btn-icon" id="theme-toggle" title="Toggle Theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="content-wrapper">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search APIs...">
+                    </div>
+
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <i class="fas fa-folder"></i>
+                            <div class="stat-info">
+                                <span class="stat-number" id="total-modules">0</span>
+                                <span class="stat-label">Modules</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-plug"></i>
+                            <div class="stat-info">
+                                <span class="stat-number" id="total-apis">0</span>
+                                <span class="stat-label">APIs</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modules-section">
+                        <h3>Modules</h3>
+                        <div id="modules-list">
+                            <!-- Modules will be populated here -->
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- API Content -->
+                <section class="api-content">
+                    <div class="base-url-display">
+                        <span class="label">Base URL:</span>
+                        <code id="base-url">http://localhost:3000</code>
+                        <button class="btn-copy" onclick="copyToClipboard('http://localhost:3000')" title="Copy Base URL">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <div id="api-cards">
+                        <!-- API cards will be populated here -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Token Modal -->
+    <div class="modal" id="token-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>
+                    <i class="fas fa-key"></i>
+                    JWT Token Management
+                </h2>
+                <button class="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="help-text">
+                    Get your JWT token by logging in via POST /api/auth/login
+                </p>
+                <textarea
+                    id="token-input"
+                    placeholder="Paste your JWT token here..."
+                    rows="4"
+                ></textarea>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" id="save-token-btn">
+                        <i class="fas fa-save"></i>
+                        Save Token
+                    </button>
+                    <button class="btn btn-secondary" id="clear-token-btn">
+                        <i class="fas fa-trash"></i>
+                        Clear Token
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Test Modal -->
+    <div class="modal" id="test-modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>
+                    <i class="fas fa-flask"></i>
+                    Test API
+                </h2>
+                <button class="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="test-info">
+                    <div style="flex: 1;">
+                        <label style="display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">Endpoint (Editable - Add ID for dynamic routes)</label>
+                        <div class="test-endpoint">
+                            <span class="method-badge" id="test-method">GET</span>
+                            <input type="text" id="test-endpoint" placeholder="/api/users/123">
+                        </div>
+                    </div>
+                    <span class="role-badge" id="test-role">PUBLIC</span>
+                </div>
+
+                <div class="test-tabs">
+                    <button class="tab-btn active" id="request-tab" onclick="switchTab('request')">
+                        <i class="fas fa-arrow-up"></i> Request
+                    </button>
+                    <button class="tab-btn" id="response-tab" onclick="switchTab('response')">
+                        <i class="fas fa-arrow-down"></i> Response
+                    </button>
+                </div>
+
+                <div class="tab-content" id="request-content">
+                    <label>Request Body (JSON):</label>
+                    <textarea id="request-body" rows="12" placeholder="Enter JSON request body..."></textarea>
+
+                    <div class="modal-actions">
+                        <button class="btn btn-success" onclick="executeTest()">
+                            <i class="fas fa-play"></i>
+                            Send Request
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="response-content" style="display: none;">
+                    <div class="response-status" id="response-status"></div>
+                    <pre id="response-output">// Response will appear here</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle" id="toast-icon"></i>
+        <span id="toast-message">Success!</span>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/api-catalog.js"></script>
+</body>
+</html>

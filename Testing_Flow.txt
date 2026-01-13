@@ -1,0 +1,7 @@
+Register ADMIN → Login → Get Token
+Create Products (check product.routes.js for samples)
+Create Customers (names/addresses)
+Create Expense Categories first
+Create Sales (stock auto-decreases)
+Create Expenses (with Pakistani context)
+Check Reports

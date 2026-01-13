@@ -1,0 +1,840 @@
+{
+  "projectName": "ERP Management System",
+  "version": "1.0.0",
+  "baseUrl": "http://localhost:3000",
+  "modules": [
+    {
+      "name": "Authentication",
+      "icon": "fa-lock",
+      "description": "User authentication and authorization",
+      "apis": [
+        {
+          "id": "auth-register",
+          "method": "POST",
+          "endpoint": "/api/auth/register",
+          "role": "PUBLIC",
+          "description": "Register new user (Admin/Staff)",
+          "requiresAuth": false,
+          "requestBody": {
+            "name": "Ahmed Ali",
+            "email": "ahmed.ali@example.com",
+            "password": "Ahmed@123",
+            "role": "ADMIN"
+          },
+          "responseExample": {
+            "message": "User registered successfully",
+            "user": {
+              "_id": "507f1f77bcf86cd799439011",
+              "name": "Ahmed Ali",
+              "email": "ahmed.ali@example.com",
+              "role": "ADMIN",
+              "isActive": true
+            }
+          }
+        },
+        {
+          "id": "auth-login",
+          "method": "POST",
+          "endpoint": "/api/auth/login",
+          "role": "PUBLIC",
+          "description": "Login and get JWT token",
+          "requiresAuth": false,
+          "requestBody": {
+            "email": "ahmed.ali@example.com",
+            "password": "Ahmed@123"
+          },
+          "responseExample": {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+            "user": {
+              "_id": "507f1f77bcf86cd799439011",
+              "name": "Ahmed Ali",
+              "email": "ahmed.ali@example.com",
+              "role": "ADMIN"
+            }
+          }
+        },
+        {
+          "id": "auth-me",
+          "method": "GET",
+          "endpoint": "/api/auth/me",
+          "role": "ALL",
+          "description": "Get current logged-in user details",
+          "requiresAuth": true,
+          "responseExample": {
+            "_id": "507f1f77bcf86cd799439011",
+            "name": "Ahmed Ali",
+            "email": "ahmed.ali@example.com",
+            "role": "ADMIN",
+            "isActive": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "icon": "fa-users",
+      "description": "User management (Admin only)",
+      "apis": [
+        {
+          "id": "user-create",
+          "method": "POST",
+          "endpoint": "/api/users",
+          "role": "ADMIN",
+          "description": "Create new user",
+          "requiresAuth": true,
+          "requestBody": {
+            "name": "Sana Malik",
+            "email": "sana.malik@erp.com",
+            "password": "Sana@2024",
+            "role": "STAFF"
+          },
+          "responseExample": {
+            "message": "User created successfully",
+            "user": {
+              "_id": "507f1f77bcf86cd799439012",
+              "name": "Sana Malik",
+              "email": "sana.malik@erp.com",
+              "role": "STAFF",
+              "isActive": true
+            }
+          }
+        },
+        {
+          "id": "user-getall",
+          "method": "GET",
+          "endpoint": "/api/users",
+          "role": "ADMIN",
+          "description": "Get all users",
+          "requiresAuth": true,
+          "responseExample": [
+            {
+              "_id": "507f1f77bcf86cd799439011",
+              "name": "Ahmed Ali",
+              "email": "ahmed.ali@example.com",
+              "role": "ADMIN",
+              "isActive": true
+            }
+          ]
+        },
+        {
+          "id": "user-getone",
+          "method": "GET",
+          "endpoint": "/api/users/:id",
+          "role": "ADMIN",
+          "description": "Get user by ID",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439012"
+          },
+          "responseExample": {
+            "_id": "507f1f77bcf86cd799439012",
+            "name": "Sana Malik",
+            "email": "sana.malik@erp.com",
+            "role": "STAFF"
+          }
+        },
+        {
+          "id": "user-update",
+          "method": "PUT",
+          "endpoint": "/api/users/:id",
+          "role": "ADMIN",
+          "description": "Update user information",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439012"
+          },
+          "requestBody": {
+            "name": "Sana Malik Khan",
+            "role": "MANAGER"
+          },
+          "responseExample": {
+            "message": "User updated successfully",
+            "user": {
+              "_id": "507f1f77bcf86cd799439012",
+              "name": "Sana Malik Khan",
+              "role": "MANAGER"
+            }
+          }
+        },
+        {
+          "id": "user-disable",
+          "method": "PATCH",
+          "endpoint": "/api/users/:id/disable",
+          "role": "ADMIN",
+          "description": "Disable user account",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439012"
+          },
+          "responseExample": {
+            "message": "User disabled successfully"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "icon": "fa-box",
+      "description": "Product and inventory management",
+      "apis": [
+        {
+          "id": "product-create",
+          "method": "POST",
+          "endpoint": "/api/products",
+          "role": "ADMIN",
+          "description": "Add new product to inventory",
+          "requiresAuth": true,
+          "requestBody": {
+            "name": "Samsung Galaxy A54",
+            "sku": "SGH-A54-BLK-128",
+            "purchasePrice": 85000,
+            "salePrice": 95000,
+            "quantity": 50,
+            "lowStockAlert": 10
+          },
+          "responseExample": {
+            "message": "Product created successfully",
+            "product": {
+              "_id": "507f1f77bcf86cd799439013",
+              "name": "Samsung Galaxy A54",
+              "sku": "SGH-A54-BLK-128",
+              "purchasePrice": 85000,
+              "salePrice": 95000,
+              "quantity": 50,
+              "lowStockAlert": 10
+            }
+          }
+        },
+        {
+          "id": "product-getall",
+          "method": "GET",
+          "endpoint": "/api/products",
+          "role": "ALL",
+          "description": "Get all products",
+          "requiresAuth": true,
+          "responseExample": [
+            {
+              "_id": "507f1f77bcf86cd799439013",
+              "name": "Samsung Galaxy A54",
+              "sku": "SGH-A54-BLK-128",
+              "purchasePrice": 85000,
+              "salePrice": 95000,
+              "quantity": 50
+            }
+          ]
+        },
+        {
+          "id": "product-getone",
+          "method": "GET",
+          "endpoint": "/api/products/:id",
+          "role": "ALL",
+          "description": "Get product by ID",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439013"
+          },
+          "responseExample": {
+            "_id": "507f1f77bcf86cd799439013",
+            "name": "Samsung Galaxy A54",
+            "salePrice": 95000,
+            "quantity": 50
+          }
+        },
+        {
+          "id": "product-update",
+          "method": "PUT",
+          "endpoint": "/api/products/:id",
+          "role": "ADMIN",
+          "description": "Update product information",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439013"
+          },
+          "requestBody": {
+            "name": "Samsung Galaxy A54 5G",
+            "salePrice": 92000,
+            "quantity": 75
+          },
+          "responseExample": {
+            "message": "Product updated successfully",
+            "product": {
+              "_id": "507f1f77bcf86cd799439013",
+              "name": "Samsung Galaxy A54 5G",
+              "salePrice": 92000,
+              "quantity": 75
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "icon": "fa-user",
+      "description": "Customer management",
+      "apis": [
+        {
+          "id": "customer-create",
+          "method": "POST",
+          "endpoint": "/api/customers",
+          "role": "ALL",
+          "description": "Add new customer",
+          "requiresAuth": true,
+          "requestBody": {
+            "name": "Muhammad Ali Raza",
+            "phone": "03001234567",
+            "address": "House 42, Street 5, Block A, Gulberg III, Lahore",
+            "balance": 0
+          },
+          "responseExample": {
+            "message": "Customer created successfully",
+            "customer": {
+              "_id": "507f1f77bcf86cd799439020",
+              "name": "Muhammad Ali Raza",
+              "phone": "03001234567",
+              "address": "House 42, Street 5, Block A, Gulberg III, Lahore",
+              "balance": 0
+            }
+          }
+        },
+        {
+          "id": "customer-getall",
+          "method": "GET",
+          "endpoint": "/api/customers",
+          "role": "ALL",
+          "description": "Get all customers",
+          "requiresAuth": true,
+          "responseExample": [
+            {
+              "_id": "507f1f77bcf86cd799439020",
+              "name": "Muhammad Ali Raza",
+              "phone": "03001234567",
+              "balance": 0
+            }
+          ]
+        },
+        {
+          "id": "customer-getone",
+          "method": "GET",
+          "endpoint": "/api/customers/:id",
+          "role": "ALL",
+          "description": "Get customer by ID",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439020"
+          },
+          "responseExample": {
+            "_id": "507f1f77bcf86cd799439020",
+            "name": "Muhammad Ali Raza",
+            "phone": "03001234567",
+            "address": "House 42, Street 5, Block A, Gulberg III, Lahore"
+          }
+        },
+        {
+          "id": "customer-update",
+          "method": "PUT",
+          "endpoint": "/api/customers/:id",
+          "role": "ADMIN",
+          "description": "Update customer information",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439020"
+          },
+          "requestBody": {
+            "name": "Muhammad Ali Raza Khan",
+            "balance": 5000
+          },
+          "responseExample": {
+            "message": "Customer updated successfully",
+            "customer": {
+              "_id": "507f1f77bcf86cd799439020",
+              "name": "Muhammad Ali Raza Khan",
+              "balance": 5000
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sales",
+      "icon": "fa-dollar-sign",
+      "description": "Sales transaction management",
+      "apis": [
+        {
+          "id": "sale-create",
+          "method": "POST",
+          "endpoint": "/api/sales",
+          "role": "ALL",
+          "description": "Create new sale (auto decreases stock)",
+          "requiresAuth": true,
+          "requestBody": {
+            "customer": "507f1f77bcf86cd799439020",
+            "items": [
+              {
+                "product": "507f1f77bcf86cd799439013",
+                "quantity": 2
+              }
+            ]
+          },
+          "responseExample": {
+            "message": "Sale created successfully",
+            "sale": {
+              "_id": "507f1f77bcf86cd799439030",
+              "customer": "507f1f77bcf86cd799439020",
+              "totalAmount": 190000,
+              "status": "completed"
+            }
+          }
+        },
+        {
+          "id": "sale-getall",
+          "method": "GET",
+          "endpoint": "/api/sales",
+          "role": "ALL",
+          "description": "Get all sales",
+          "requiresAuth": true,
+          "responseExample": [
+            {
+              "_id": "507f1f77bcf86cd799439030",
+              "customer": {
+                "name": "Muhammad Ali Raza"
+              },
+              "totalAmount": 190000,
+              "status": "completed"
+            }
+          ]
+        },
+        {
+          "id": "sale-getone",
+          "method": "GET",
+          "endpoint": "/api/sales/:id",
+          "role": "ALL",
+          "description": "Get sale by ID",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439030"
+          },
+          "responseExample": {
+            "_id": "507f1f77bcf86cd799439030",
+            "totalAmount": 190000
+          }
+        }
+      ]
+    },
+    {
+      "name": "Expense Categories",
+      "icon": "fa-folder",
+      "description": "Expense category management",
+      "apis": [
+        {
+          "id": "category-create",
+          "method": "POST",
+          "endpoint": "/api/expense-categories",
+          "role": "ADMIN",
+          "description": "Create new expense category",
+          "requiresAuth": true,
+          "requestBody": {
+            "categoryName": "Rent",
+            "description": "Monthly office and shop rent payments"
+          },
+          "responseExample": {
+            "message": "Category created successfully",
+            "category": {
+              "_id": "507f1f77bcf86cd799439050",
+              "categoryName": "Rent"
+            }
+          }
+        },
+        {
+          "id": "category-getall",
+          "method": "GET",
+          "endpoint": "/api/expense-categories",
+          "role": "ALL",
+          "description": "Get all expense categories",
+          "requiresAuth": true,
+          "responseExample": [
+            {
+              "_id": "507f1f77bcf86cd799439050",
+              "categoryName": "Rent"
+            }
+          ]
+        },
+        {
+          "id": "category-getone",
+          "method": "GET",
+          "endpoint": "/api/expense-categories/:id",
+          "role": "ALL",
+          "description": "Get category by ID",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439050"
+          },
+          "responseExample": {
+            "_id": "507f1f77bcf86cd799439050",
+            "categoryName": "Rent"
+          }
+        },
+        {
+          "id": "category-update",
+          "method": "PUT",
+          "endpoint": "/api/expense-categories/:id",
+          "role": "ADMIN",
+          "description": "Update category",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439050"
+          },
+          "requestBody": {
+            "categoryName": "Office Rent"
+          },
+          "responseExample": {
+            "message": "Category updated successfully"
+          }
+        },
+        {
+          "id": "category-delete",
+          "method": "DELETE",
+          "endpoint": "/api/expense-categories/:id",
+          "role": "ADMIN",
+          "description": "Delete category",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439050"
+          },
+          "responseExample": {
+            "message": "Category deleted successfully"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Expenses",
+      "icon": "fa-money-bill-wave",
+      "description": "Business expense management",
+      "apis": [
+        {
+          "id": "expense-create",
+          "method": "POST",
+          "endpoint": "/api/expenses",
+          "role": "ALL",
+          "description": "Create new expense",
+          "requiresAuth": true,
+          "requestBody": {
+            "title": "Office Rent - January 2024",
+            "category": "507f1f77bcf86cd799439050",
+            "amount": 50000,
+            "date": "2024-01-15",
+            "note": "Monthly rent payment"
+          },
+          "responseExample": {
+            "message": "Expense created successfully",
+            "expense": {
+              "_id": "507f1f77bcf86cd799439060",
+              "title": "Office Rent - January 2024",
+              "amount": 50000
+            }
+          }
+        },
+        {
+          "id": "expense-getall",
+          "method": "GET",
+          "endpoint": "/api/expenses",
+          "role": "ALL",
+          "description": "Get all expenses",
+          "requiresAuth": true,
+          "responseExample": [
+            {
+              "_id": "507f1f77bcf86cd799439060",
+              "title": "Office Rent",
+              "amount": 50000
+            }
+          ]
+        },
+        {
+          "id": "expense-getone",
+          "method": "GET",
+          "endpoint": "/api/expenses/:id",
+          "role": "ALL",
+          "description": "Get expense by ID",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439060"
+          },
+          "responseExample": {
+            "_id": "507f1f77bcf86cd799439060",
+            "amount": 50000
+          }
+        },
+        {
+          "id": "expense-report",
+          "method": "GET",
+          "endpoint": "/api/expenses/report",
+          "role": "ALL",
+          "description": "Get expense report",
+          "requiresAuth": true,
+          "queryParams": {
+            "startDate": "2024-01-01",
+            "endDate": "2024-01-31"
+          },
+          "responseExample": {
+            "totalAmount": 125000,
+            "count": 8
+          }
+        },
+        {
+          "id": "expense-update",
+          "method": "PUT",
+          "endpoint": "/api/expenses/:id",
+          "role": "ADMIN",
+          "description": "Update expense",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439060"
+          },
+          "requestBody": {
+            "amount": 52000
+          },
+          "responseExample": {
+            "message": "Expense updated successfully"
+          }
+        },
+        {
+          "id": "expense-delete",
+          "method": "DELETE",
+          "endpoint": "/api/expenses/:id",
+          "role": "ADMIN",
+          "description": "Delete expense",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439060"
+          },
+          "responseExample": {
+            "message": "Expense deleted successfully"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Returns",
+      "icon": "fa-undo",
+      "description": "Sale return management",
+      "apis": [
+        {
+          "id": "return-create",
+          "method": "POST",
+          "endpoint": "/api/returns",
+          "role": "ALL",
+          "description": "Create sale return",
+          "requiresAuth": true,
+          "requestBody": {
+            "sale": "507f1f77bcf86cd799439030",
+            "product": "507f1f77bcf86cd799439013",
+            "quantity": 1,
+            "refundAmount": 95000,
+            "reason": "Defective"
+          },
+          "responseExample": {
+            "message": "Return created successfully",
+            "return": {
+              "_id": "507f1f77bcf86cd799439070",
+              "refundAmount": 95000
+            }
+          }
+        },
+        {
+          "id": "return-getall",
+          "method": "GET",
+          "endpoint": "/api/returns",
+          "role": "ALL",
+          "description": "Get all returns",
+          "requiresAuth": true,
+          "responseExample": [
+            {
+              "_id": "507f1f77bcf86cd799439070",
+              "refundAmount": 95000
+            }
+          ]
+        },
+        {
+          "id": "return-getone",
+          "method": "GET",
+          "endpoint": "/api/returns/:id",
+          "role": "ALL",
+          "description": "Get return by ID",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439070"
+          },
+          "responseExample": {
+            "_id": "507f1f77bcf86cd799439070"
+          }
+        },
+        {
+          "id": "return-bysale",
+          "method": "GET",
+          "endpoint": "/api/returns/sale/:saleId",
+          "role": "ALL",
+          "description": "Get returns by sale",
+          "requiresAuth": true,
+          "urlParams": {
+            "saleId": "507f1f77bcf86cd799439030"
+          },
+          "responseExample": []
+        },
+        {
+          "id": "return-delete",
+          "method": "DELETE",
+          "endpoint": "/api/returns/:id",
+          "role": "ADMIN",
+          "description": "Delete return",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439070"
+          },
+          "responseExample": {
+            "message": "Return deleted successfully"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "icon": "fa-chart-bar",
+      "description": "Business analytics",
+      "apis": [
+        {
+          "id": "report-daily",
+          "method": "GET",
+          "endpoint": "/api/reports/sales/daily",
+          "role": "ALL",
+          "description": "Daily sales report",
+          "requiresAuth": true,
+          "responseExample": {
+            "totalSales": 570000,
+            "totalOrders": 5
+          }
+        },
+        {
+          "id": "report-monthly",
+          "method": "GET",
+          "endpoint": "/api/reports/sales/monthly",
+          "role": "ALL",
+          "description": "Monthly sales",
+          "requiresAuth": true,
+          "responseExample": [
+            {
+              "_id": {
+                "month": 1,
+                "year": 2024
+              },
+              "totalSales": 2500000
+            }
+          ]
+        },
+        {
+          "id": "report-top",
+          "method": "GET",
+          "endpoint": "/api/reports/top-products",
+          "role": "ALL",
+          "description": "Top selling products",
+          "requiresAuth": true,
+          "responseExample": []
+        },
+        {
+          "id": "report-customer",
+          "method": "GET",
+          "endpoint": "/api/reports/customer-sales",
+          "role": "ALL",
+          "description": "Customer sales summary",
+          "requiresAuth": true,
+          "responseExample": []
+        }
+      ]
+    },
+    {
+      "name": "System Logs",
+      "icon": "fa-file-alt",
+      "description": "Activity tracking",
+      "apis": [
+        {
+          "id": "log-create",
+          "method": "POST",
+          "endpoint": "/api/logs",
+          "role": "ADMIN",
+          "description": "Create log entry",
+          "requiresAuth": true,
+          "requestBody": {
+            "user": "507f1f77bcf86cd799439011",
+            "action": "User Login",
+            "module": "Authentication"
+          },
+          "responseExample": {
+            "message": "Log created successfully"
+          }
+        },
+        {
+          "id": "log-getall",
+          "method": "GET",
+          "endpoint": "/api/logs",
+          "role": "ADMIN",
+          "description": "Get all logs",
+          "requiresAuth": true,
+          "responseExample": []
+        },
+        {
+          "id": "log-getone",
+          "method": "GET",
+          "endpoint": "/api/logs/:id",
+          "role": "ADMIN",
+          "description": "Get log by ID",
+          "requiresAuth": true,
+          "urlParams": {
+            "id": "507f1f77bcf86cd799439080"
+          },
+          "responseExample": {}
+        },
+        {
+          "id": "log-byuser",
+          "method": "GET",
+          "endpoint": "/api/logs/user/:userId",
+          "role": "ADMIN",
+          "description": "Get user logs",
+          "requiresAuth": true,
+          "urlParams": {
+            "userId": "507f1f77bcf86cd799439011"
+          },
+          "responseExample": []
+        },
+        {
+          "id": "log-cleanup",
+          "method": "DELETE",
+          "endpoint": "/api/logs/cleanup",
+          "role": "ADMIN",
+          "description": "Delete old logs",
+          "requiresAuth": true,
+          "queryParams": {
+            "days": "90"
+          },
+          "responseExample": {
+            "message": "Deleted 150 old logs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stock Logs",
+      "icon": "fa-boxes",
+      "description": "Stock movement tracking",
+      "apis": [
+        {
+          "id": "stock-logs",
+          "method": "GET",
+          "endpoint": "/api/stock/logs",
+          "role": "ALL",
+          "description": "Stock movement history",
+          "requiresAuth": true,
+          "responseExample": []
+        }
+      ]
+    }
+  ]
+}

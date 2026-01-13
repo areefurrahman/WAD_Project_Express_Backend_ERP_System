@@ -1,0 +1,8 @@
+Reports APIs:
+
+| API | Endpoint                      | Purpose               |
+| --- | ----------------------------- | --------------------- |
+| GET | `/api/reports/sales/daily`    | Today’s total sales   |
+| GET | `/api/reports/sales/monthly`  | Monthly sales summary |
+| GET | `/api/reports/top-products`   | Best-selling products |
+| GET | `/api/reports/customer-sales` | Sales per customer    |

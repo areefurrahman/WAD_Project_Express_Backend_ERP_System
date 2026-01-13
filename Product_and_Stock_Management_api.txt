@@ -1,0 +1,14 @@
+Product APIs
+
+| Method | Endpoint            | Access      | Purpose        |
+| ------ | ------------------- | ----------- | -------------- |
+| POST   | `/api/products`     | Admin       | Create product |
+| GET    | `/api/products`     | Admin/Staff | List products  |
+| GET    | `/api/products/:id` | Admin/Staff | Single product |
+| PUT    | `/api/products/:id` | Admin       | Update product |
+
+Stock APIs
+| Method | Endpoint            | Access | Purpose                 |
+| ------ | ------------------- | ------ | ----------------------- |
+| POST   | `/api/stock/adjust` | Admin  | Increase/Decrease stock |
+| GET    | `/api/stock/logs`   | Admin  | Stock history           |

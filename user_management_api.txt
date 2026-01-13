@@ -1,0 +1,7 @@
+| API                      | Method | Access | Purpose           |
+| ------------------------ | ------ | ------ | ----------------- |
+| `/api/users`             | POST   | Admin  | Create staff user |
+| `/api/users`             | GET    | Admin  | List all users    |
+| `/api/users/:id`         | GET    | Admin  | Get single user   |
+| `/api/users/:id`         | PUT    | Admin  | Update user       |
+| `/api/users/:id/disable` | PATCH  | Admin  | Disable user      |
